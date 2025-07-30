@@ -1,0 +1,207 @@
+/* QuickChars Webview Styles */
+
+/* Base styles */
+body {
+  color: var(--vscode-foreground);
+  background-color: var(--vscode-editor-background);
+  font-family: var(--vscode-font-family);
+  padding: 0.5rem;
+}
+
+/* Info banner */
+.info-banner {
+  background-color: var(--vscode-textBlockQuote-background);
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.info-banner .title {
+  font-weight: 600;
+  color: var(--vscode-foreground);
+  margin-bottom: 0.4rem;
+}
+
+.info-banner .description {
+  color: var(--vscode-descriptionForeground);
+  margin-bottom: 0.5rem;
+}
+
+.settings-link {
+  color: var(--vscode-textLink-foreground);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.settings-link:hover {
+  color: var(--vscode-textLink-activeForeground);
+}
+
+/* Group sections */
+.group-section {
+  margin-bottom: 16px;
+  background-color: var(--vscode-editor-background);
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: var(--vscode-sideBar-background);
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.group-header:hover {
+  background-color: var(--vscode-list-hoverBackground);
+}
+
+.group-header h3 {
+  color: var(--vscode-foreground);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.collapse-icon {
+  font-size: 12px;
+  color: var(--vscode-icon-foreground);
+  transition: transform 0.2s ease;
+  margin-left: 8px;
+}
+
+.collapse-icon.collapsed {
+  transform: rotate(-90deg);
+}
+
+.group-content {
+  padding: 12px;
+  display: block;
+}
+
+.group-content.collapsed {
+  display: none;
+}
+
+/* Button containers */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.snippet-container {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.mixed-container {
+  /* Mixed layout - snippets take full width, characters flow normally */
+  align-items: stretch;
+}
+
+.mixed-container vscode-button.snippet-button {
+  width: 100%;
+  margin-bottom: 0.2rem;
+}
+
+/* Character buttons - square */
+vscode-button.char-button {
+  font-size: 0.8rem;
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+vscode-button.char-button::part(control) {
+  width: 100%;
+  height: 100%;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Snippet buttons - variable width */
+vscode-button.snippet-button {
+  font-size: 0.75rem;
+  min-width: auto;
+  width: 100%;
+  height: 28px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin-bottom: 0.2rem;
+  text-align: left;
+}
+
+vscode-button.snippet-button::part(control) {
+  width: 100%;
+  height: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Default fallback for buttons without class */
+vscode-button:not(.char-button):not(.snippet-button) {
+  font-size: 0.8rem;
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* Empty state styles */
+.empty-state {
+  color: var(--vscode-descriptionForeground);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: center;
+  padding: 1rem;
+}
+
+.empty-state h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--vscode-foreground);
+  font-size: 1rem;
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+}
+
+.settings-hint {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: var(--vscode-textBlockQuote-background);
+  font-size: 0.8rem;
+  text-align: left;
+}

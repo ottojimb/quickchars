@@ -1,0 +1,175 @@
+{
+  "name": "quickchars",
+  "displayName": "QuickChars",
+  "description": "Quick access to special characters, symbols, emojis, and code snippets through a customizable sidebar panel",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "quickCharsContainer",
+          "title": "QuickChars",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "quickCharsContainer": [
+        {
+          "id": "quickCharsView",
+          "name": "QuickChars Panel",
+          "icon": "media/icon.svg",
+          "type": "webview",
+          "when": "config.quickChars.showInActivityBar"
+        }
+      ],
+      "explorer": [
+        {
+          "id": "quickCharsViewInExplorer",
+          "name": "QuickChars",
+          "icon": "media/icon.svg",
+          "type": "webview",
+          "when": "config.quickChars.showInExplorer"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "quickChars.toggleActivityBar",
+        "title": "Toggle QuickChars in Activity Bar",
+        "category": "QuickChars"
+      },
+      {
+        "command": "quickChars.toggleExplorer",
+        "title": "Toggle QuickChars in Explorer",
+        "category": "QuickChars"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "QuickChars",
+      "properties": {
+        "quickChars.showInfoBanner": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the informational banner with configuration tips"
+        },
+        "quickChars.groups": {
+          "type": "array",
+          "default": [
+            {
+              "name": "Special Characters",
+              "items": [
+                { "label": "→", "text": "→" },
+                { "label": "©", "text": "©" },
+                { "label": "✓", "text": "✓" },
+                { "label": "€", "text": "€" },
+                { "label": "£", "text": "£" },
+                { "label": "¥", "text": "¥" },
+                { "label": "§", "text": "§" },
+                { "label": "°", "text": "°" },
+                { "label": "±", "text": "±" },
+                { "label": "×", "text": "×" },
+                { "label": "÷", "text": "÷" },
+                { "label": "≈", "text": "≈" },
+                { "label": "≠", "text": "≠" },
+                { "label": "≤", "text": "≤" },
+                { "label": "≥", "text": "≥" },
+                { "label": "∞", "text": "∞" },
+                { "label": "‘", "text": "‘" },
+                { "label": "’", "text": "’" },
+                { "label": "“", "text": "“" },
+                { "label": "”", "text": "”" },
+                { "label": "«", "text": "«" },
+                { "label": "»", "text": "»" }
+              ]
+            },
+            {
+              "name": "Spanish Accents",
+              "items": [
+                { "label": "á", "text": "á" },
+                { "label": "é", "text": "é" },
+                { "label": "í", "text": "í" },
+                { "label": "ó", "text": "ó" },
+                { "label": "ú", "text": "ú" },
+                { "label": "ü", "text": "ü" },
+                { "label": "ñ", "text": "ñ" },
+                { "label": "Á", "text": "Á" },
+                { "label": "É", "text": "É" },
+                { "label": "Í", "text": "Í" },
+                { "label": "Ó", "text": "Ó" },
+                { "label": "Ú", "text": "Ú" },
+                { "label": "Ü", "text": "Ü" },
+                { "label": "Ñ", "text": "Ñ" },
+                { "label": "¿", "text": "¿" },
+                { "label": "¡", "text": "¡" }
+              ]
+            },
+            {
+              "name": "Emojis",
+              "items": [
+                { "label": "😀", "text": "😀" },
+                { "label": "👍", "text": "👍" },
+                { "label": "❤️", "text": "❤️" },
+                { "label": "🎉", "text": "🎉" },
+                { "label": "🚀", "text": "🚀" },
+                { "label": "💡", "text": "💡" },
+                { "label": "⚡", "text": "⚡" },
+                { "label": "🔥", "text": "🔥" },
+                { "label": "✨", "text": "✨" },
+                { "label": "🎯", "text": "🎯" }
+              ]
+            },
+            {
+              "name": "Code Snippets",
+              "items": [
+                { "label": "Console Log", "text": "console.log('$1');", "isSnippet": true },
+                { "label": "Arrow Function", "text": "const $1 = ($2) => {\n\t$3\n};", "isSnippet": true }
+              ]
+            }
+          ],
+          "description": "Custom groups with items. Each group has a name and items with label, text, and optional isSnippet properties. Set isSnippet: true for snippet-style buttons (full width), or false/omit for character-style buttons (square)."
+        },
+        "quickChars.showInActivityBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show QuickChars panel in the activity bar"
+        },
+        "quickChars.showInExplorer": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show QuickChars panel in the explorer"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./ && cp -r src/styles out/",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.102.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@vscode-elements/elements": "^1.6.1"
+  }
+}

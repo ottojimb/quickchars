@@ -1,0 +1,20 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background rounded rectangle -->
+  <rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.8"/>
+
+  <!-- Grid of dots representing characters/symbols -->
+  <circle cx="4" cy="4" r="1" fill="currentColor" opacity="0.9"/>
+  <circle cx="8" cy="4" r="1" fill="currentColor" opacity="0.9"/>
+  <circle cx="12" cy="4" r="1" fill="currentColor" opacity="0.9"/>
+
+  <circle cx="4" cy="8" r="1" fill="currentColor" opacity="0.9"/>
+  <circle cx="8" cy="8" r="1.2" fill="currentColor"/>
+  <circle cx="12" cy="8" r="1" fill="currentColor" opacity="0.9"/>
+
+  <circle cx="4" cy="12" r="1" fill="currentColor" opacity="0.9"/>
+  <circle cx="8" cy="12" r="1" fill="currentColor" opacity="0.9"/>
+  <circle cx="12" cy="12" r="1" fill="currentColor" opacity="0.9"/>
+
+  <!-- Highlight the center dot to indicate selection/action -->
+  <circle cx="8" cy="8" r="0.5" fill="var(--vscode-editor-background, white)" opacity="0.8"/>
+</svg>
