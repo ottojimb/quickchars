@@ -13,7 +13,7 @@
     "vscode": "^1.102.0"
   },
   "categories": [
-    "Other"
+    "Other", "Snippets"
   ],
   "main": "./out/extension.js",
   "contributes": {

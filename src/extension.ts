@@ -48,7 +48,7 @@ class QuickCharsViewProvider implements vscode.WebviewViewProvider {
 
   private loadStyles(): string {
     try {
-      const stylesPath = path.join(this.context.extensionPath, 'src', 'styles', 'webview.css');
+      const stylesPath = path.join(this.context.extensionPath, 'out', 'styles', 'webview.css');
       return fs.readFileSync(stylesPath, 'utf8');
     } catch (error) {
       console.error('Failed to load styles:', error);
