@@ -3,6 +3,12 @@
   "displayName": "QuickChars",
   "description": "Quick access to special characters, symbols, emojis, and code snippets through a customizable sidebar panel",
   "version": "1.0.0",
+  "icon": "icon.png",
+  "publisher": "ottojimb",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ottojimb/quickchars.git"
+  },
   "engines": {
     "vscode": "^1.102.0"
   },

@@ -1,8 +1,6 @@
 # 🚀 QuickChars
 
-<p align="center">
-  <img src="./assets/quickchars.svg" alt="QuickChars Logo" width="120"/>
-</p>
+![QuickChars Logo](./icon.png)
 
 A Visual Studio Code extension that provides quick access to special characters, symbols, emojis, and code snippets through a convenient sidebar panel.
 
