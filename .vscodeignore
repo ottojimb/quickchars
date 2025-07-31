@@ -9,3 +9,17 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/.vscode-test.*
+quickchars-*.vsix
+node_modules/**/test/**
+node_modules/**/tests/**
+node_modules/**/development/**
+node_modules/**/node/**
+node_modules/**/*.md
+node_modules/**/*.txt
+node_modules/**/LICENSE*
+node_modules/**/README*
+node_modules/**/CHANGELOG*
+node_modules/**/*.d.ts
+node_modules/**/package.json
+.github/workflows/**
+.DS_Store

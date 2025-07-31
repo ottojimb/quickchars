@@ -8,30 +8,30 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
-        
+
     - name: Install dependencies
       run: npm ci
-      
+
     - name: Compile extension
       run: npm run compile
-      
+
     - name: Package extension
       run: npx vsce package
-      
+
     - name: Get version from tag
       id: get_version
       run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-      
+
     - name: Create Release
       uses: actions/create-release@v1
       id: create_release
@@ -42,23 +42,23 @@ jobs:
         release_name: QuickChars v${{ steps.get_version.outputs.VERSION }}
         body: |
           ## What's Changed
-          
+
           See [CHANGELOG.md](https://github.com/ottojimb/quickchars/blob/main/CHANGELOG.md) for detailed changes.
-          
+
           ## Installation
-          
+
           1. Download the `quickchars-${{ steps.get_version.outputs.VERSION }}.vsix` file
           2. In VS Code/Cursor, go to Extensions view (Ctrl+Shift+X)
           3. Click the "..." menu and select "Install from VSIX..."
           4. Select the downloaded file
-          
+
           ## Compatibility
-          
+
           - VS Code: ^1.95.0
           - Cursor IDE: Compatible
         draft: false
         prerelease: false
-        
+
     - name: Upload VSIX Asset
       uses: actions/upload-release-asset@v1
       env:
