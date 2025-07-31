@@ -5,27 +5,33 @@ body {
   color: var(--vscode-foreground);
   background-color: var(--vscode-editor-background);
   font-family: var(--vscode-font-family);
-  padding: 0.5rem;
+  padding: 1rem;
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* Info banner */
 .info-banner {
   background-color: var(--vscode-textBlockQuote-background);
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
-  line-height: 1.4;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  border-radius: 6px;
+  border-left: 3px solid var(--vscode-focusBorder);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .info-banner .title {
   font-weight: 600;
   color: var(--vscode-foreground);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .info-banner .description {
   color: var(--vscode-descriptionForeground);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .settings-link {
@@ -33,27 +39,39 @@ body {
   text-decoration: underline;
   cursor: pointer;
   font-weight: 500;
+  transition: color 0.2s ease;
 }
 
 .settings-link:hover {
   color: var(--vscode-textLink-activeForeground);
+  text-decoration: none;
 }
 
 /* Group sections */
 .group-section {
-  margin-bottom: 16px;
+  margin-bottom: 1.25rem;
   background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-widget-border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+}
+
+.group-section:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .group-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 0.75rem 1rem;
   cursor: pointer;
-  background-color: var(--vscode-sideBar-background);
+  background-color: var(--vscode-sideBarSectionHeader-background);
   user-select: none;
   transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--vscode-widget-border);
 }
 
 .group-header:hover {
@@ -61,28 +79,33 @@ body {
 }
 
 .group-header h3 {
-  color: var(--vscode-foreground);
-  font-size: 13px;
+  color: var(--vscode-sideBarSectionHeader-foreground);
+  font-size: 0.9rem;
   font-weight: 600;
   margin: 0;
   padding: 0;
   flex-grow: 1;
+  letter-spacing: 0.025em;
 }
 
 .collapse-icon {
-  font-size: 12px;
+  font-size: 0.85rem;
   color: var(--vscode-icon-foreground);
-  transition: transform 0.2s ease;
+  transition: all 0.2s ease;
   margin-left: 8px;
+  width: 1rem;
+  text-align: center;
 }
 
 .collapse-icon.collapsed {
   transform: rotate(-90deg);
+  color: var(--vscode-descriptionForeground);
 }
 
 .group-content {
-  padding: 12px;
+  padding: 1rem;
   display: block;
+  transition: all 0.25s ease;
 }
 
 .group-content.collapsed {
@@ -93,69 +116,97 @@ body {
 .button-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .snippet-container {
   flex-direction: column;
   align-items: stretch;
+  gap: 0.3rem;
 }
 
 .mixed-container {
-  /* Mixed layout - snippets take full width, characters flow normally */
   align-items: stretch;
+  gap: 0.4rem;
 }
 
 .mixed-container vscode-button.snippet-button {
   width: 100%;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 }
 
-/* Character buttons - square */
+/* Character buttons - improved square design */
 vscode-button.char-button {
-  font-size: 0.8rem;
-  min-width: 32px;
-  width: 32px;
-  height: 32px;
+  font-size: 1rem;
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   flex-shrink: 0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--vscode-widget-border);
+}
+
+vscode-button.char-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+vscode-button.char-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 vscode-button.char-button::part(control) {
   width: 100%;
   height: 100%;
-  min-width: 32px;
-  min-height: 32px;
+  min-width: 40px;
+  min-height: 40px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px;
+  font-weight: 500;
 }
 
-/* Snippet buttons - variable width */
+/* Snippet buttons - improved design */
 vscode-button.snippet-button {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   min-width: auto;
   width: 100%;
-  height: 28px;
-  padding: 0 8px;
+  height: 34px;
+  padding: 0 0.75rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   box-sizing: border-box;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
   text-align: left;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--vscode-widget-border);
+}
+
+vscode-button.snippet-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 vscode-button.snippet-button::part(control) {
   width: 100%;
   height: 100%;
-  min-height: 28px;
-  padding: 0 8px;
+  min-height: 34px;
+  padding: 0 0.75rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -163,45 +214,108 @@ vscode-button.snippet-button::part(control) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-radius: 6px;
 }
 
 /* Default fallback for buttons without class */
 vscode-button:not(.char-button):not(.snippet-button) {
-  font-size: 0.8rem;
-  min-width: 32px;
-  width: 32px;
-  height: 32px;
+  font-size: 1rem;
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   flex-shrink: 0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--vscode-widget-border);
+}
+
+vscode-button:not(.char-button):not(.snippet-button):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* Empty state styles */
 .empty-state {
   color: var(--vscode-descriptionForeground);
   font-size: 0.9rem;
-  line-height: 1.4;
+  line-height: 1.6;
   text-align: center;
-  padding: 1rem;
+  padding: 2rem 1rem;
+  background-color: var(--vscode-input-background);
+  border-radius: 8px;
+  border: 1px solid var(--vscode-widget-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .empty-state h3 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 1rem 0;
   color: var(--vscode-foreground);
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.empty-state h3::before {
+  content: '📝';
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
 }
 
 .empty-state p {
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
+  opacity: 0.9;
 }
 
 .settings-hint {
-  margin-top: 1rem;
-  padding: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
   background-color: var(--vscode-textBlockQuote-background);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   text-align: left;
+  border-radius: 6px;
+  border-left: 3px solid var(--vscode-button-background);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.settings-hint::before {
+  content: '💡 ';
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+/* Focus styles for better accessibility */
+vscode-button:focus-visible {
+  outline: 2px solid var(--vscode-focusBorder);
+  outline-offset: 2px;
+}
+
+.group-header:focus-visible {
+  outline: 2px solid var(--vscode-focusBorder);
+  outline-offset: -2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 300px) {
+  .button-container {
+    gap: 0.3rem;
+  }
+
+  vscode-button.char-button {
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  vscode-button.snippet-button {
+    height: 30px;
+    font-size: 0.8rem;
+  }
 }

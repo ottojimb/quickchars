@@ -2,7 +2,7 @@
   "name": "quickchars",
   "displayName": "QuickChars",
   "description": "Quick access to special characters, symbols, emojis, and code snippets through a customizable sidebar panel",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "icon": "icon.png",
   "publisher": "ottojimb",
   "repository": {
@@ -10,10 +10,10 @@
     "url": "https://github.com/ottojimb/quickchars.git"
   },
   "engines": {
-    "vscode": "^1.102.0"
+    "vscode": "^1.95.0"
   },
   "categories": [
-    "Other", "Snippets"
+    "Keymaps", "Snippets", "Visualization", "Other"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -55,6 +55,11 @@
       {
         "command": "quickChars.toggleExplorer",
         "title": "Toggle QuickChars in Explorer",
+        "category": "QuickChars"
+      },
+      {
+        "command": "quickChars.clearRecentlyUsed",
+        "title": "Clear Recently Used Items",
         "category": "QuickChars"
       }
     ],
@@ -152,6 +157,18 @@
           "type": "boolean",
           "default": true,
           "description": "Show QuickChars panel in the explorer"
+        },
+        "quickChars.showRecentlyUsed": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show recently used items section"
+        },
+        "quickChars.recentlyUsedLimit": {
+          "type": "number",
+          "default": 10,
+          "minimum": 1,
+          "maximum": 50,
+          "description": "Maximum number of recently used items to show (1-50)"
         }
       }
     }
@@ -167,7 +184,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "@types/vscode": "^1.102.0",
+    "@types/vscode": "^1.95.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "@vscode/test-cli": "^0.0.11",
