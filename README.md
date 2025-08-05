@@ -10,6 +10,25 @@ If you enjoy this extension, you can:
     <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee"/>
   </a>
 
+## 📸 Screenshots
+
+<details>
+<summary>Emojis 👌</summary>
+<img src="assets/emojis.png"/>
+</details>
+<details>
+<summary>Snippets 🧑‍💻</summary>
+<img src="assets/snippets.png"/>
+</details>
+<details>
+<summary>Custom 🔧</summary>
+<img src="assets/custom.png"/>
+</details>
+<details>
+<summary>Settings ⚙️</summary>
+<img src="assets/settings.png"/>
+</details>
+
 ## ✨ Features
 
 - **⚡ Quick Character Insertion**: Insert special characters and symbols with a single click
