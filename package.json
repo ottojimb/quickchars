@@ -2,7 +2,7 @@
   "name": "quickchars",
   "displayName": "QuickChars",
   "description": "Quick access to special characters, symbols, emojis, and code snippets through a customizable sidebar panel",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "icon": "icon.png",
   "publisher": "ottojimb",
   "repository": {
@@ -55,6 +55,11 @@
       {
         "command": "quickChars.toggleExplorer",
         "title": "Toggle QuickChars in Explorer",
+        "category": "QuickChars"
+      },
+      {
+        "command": "quickChars.insertItem",
+        "title": "Insert Character or Snippet...",
         "category": "QuickChars"
       },
       {
@@ -146,7 +151,7 @@
               ]
             }
           ],
-          "description": "Custom groups with items. Each group has a name and items with label, text, and optional isSnippet properties. Set isSnippet: true for snippet-style buttons (full width), or false/omit for character-style buttons (square)."
+          "description": "Custom groups with items. Each group has a name and items with label, text, and optional isSnippet properties. Set isSnippet: true to insert the text as a snippet (supports $1, ${1:placeholder}, $0) with a full-width button; otherwise the text is inserted literally with a square button."
         },
         "quickChars.showInActivityBar": {
           "type": "boolean",

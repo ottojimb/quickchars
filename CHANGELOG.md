@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.1.0] - 2026-11-11
+
+### Added
+- Search box to filter items by label, text or group name (`Enter` inserts the first match, `Escape` clears)
+- `QuickChars: Insert Character or Snippet...` command to insert any item from the Command Palette
+- Alt+Click copies an item to the clipboard; items are also copied when no editor is open
+- Keyboard navigation for group headers
+
+### Changed
+- Focus returns to the editor after inserting an item
+- Items without `isSnippet: true` are inserted literally, so `$`, `{` and `\` are no longer interpreted as snippet syntax
+- The panel updates in place instead of reloading, keeping the scroll position after each insertion
+- Added a Content Security Policy to the webview
+- Removed emojis from the README
+
+### Fixed
+- Snippets using `${1:placeholder}`, double quotes or backticks broke their button
+- Only one panel refreshed when QuickChars was shown in both the Activity Bar and the Explorer
+- README listed VS Code 1.102 as the minimum version instead of 1.95
+
 ## [1.0.5] - 2026-11-11
 
 ### Changed
