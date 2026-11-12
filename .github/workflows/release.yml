@@ -12,6 +12,8 @@ on:
 
 permissions:
   contents: write
+  # Required for Visual Studio Marketplace Trusted Publishing (OIDC)
+  id-token: write
 
 env:
   TAG: ${{ inputs.tag || github.ref_name }}
@@ -51,7 +53,7 @@ jobs:
         fi
 
     - name: Package extension
-      run: npx --yes @vscode/vsce package
+      run: npx --yes @vscode/vsce@4.1.0 package
 
     - name: Build release notes
       env:
@@ -93,15 +95,10 @@ jobs:
         fi
 
     - name: Publish to Visual Studio Marketplace
+      # Uses Trusted Publishing: the Marketplace publisher must have a policy for this repo and workflow file.
       env:
-        VSCE_PAT: ${{ secrets.VSCE_PAT }}
         VERSION: ${{ steps.get_version.outputs.VERSION }}
-      run: |
-        if [ -z "$VSCE_PAT" ]; then
-          echo "::warning::VSCE_PAT secret is not set, skipping Visual Studio Marketplace"
-          exit 0
-        fi
-        npx --yes @vscode/vsce publish --packagePath "quickchars-${VERSION}.vsix" --skip-duplicate
+      run: npx --yes @vscode/vsce@4.1.0 publish --oidc --packagePath "quickchars-${VERSION}.vsix" --skip-duplicate
 
     - name: Publish to Open VSX
       env:
