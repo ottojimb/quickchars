@@ -4,9 +4,17 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to (re)publish, e.g. v1.1.0'
+        required: true
 
 permissions:
   contents: write
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   release:
@@ -15,6 +23,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v5
+      with:
+        ref: ${{ env.TAG }}
 
     - name: Setup Node.js
       uses: actions/setup-node@v5
@@ -30,13 +40,13 @@ jobs:
 
     - name: Get version from tag
       id: get_version
-      run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+      run: echo "VERSION=${TAG#v}" >> "$GITHUB_OUTPUT"
 
     - name: Verify tag matches package.json version
       run: |
         PKG_VERSION=$(node -p "require('./package.json').version")
         if [ "$PKG_VERSION" != "${{ steps.get_version.outputs.VERSION }}" ]; then
-          echo "Tag v${{ steps.get_version.outputs.VERSION }} does not match package.json version $PKG_VERSION"
+          echo "Tag $TAG does not match package.json version $PKG_VERSION"
           exit 1
         fi
 
@@ -57,10 +67,9 @@ jobs:
 
         ## Installation
 
-        1. Download the \`quickchars-${VERSION}.vsix\` file
-        2. In VS Code/Cursor, go to Extensions view (Ctrl+Shift+X)
-        3. Click the "..." menu and select "Install from VSIX..."
-        4. Select the downloaded file
+        - **VS Code**: install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ottojimb.quickchars)
+        - **Cursor, VSCodium, Windsurf and other forks**: install from [Open VSX](https://open-vsx.org/extension/ottojimb/quickchars)
+        - **Manual**: download \`quickchars-${VERSION}.vsix\`, open the Extensions view, click "..." and select "Install from VSIX..."
 
         ## Compatibility
 
@@ -73,8 +82,34 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VERSION: ${{ steps.get_version.outputs.VERSION }}
       run: |
-        gh release create "$GITHUB_REF_NAME" \
-          "quickchars-${VERSION}.vsix" \
-          --title "QuickChars v${VERSION}" \
-          --notes-file notes.md \
-          --verify-tag
+        if gh release view "$TAG" >/dev/null 2>&1; then
+          echo "Release $TAG already exists, skipping"
+        else
+          gh release create "$TAG" \
+            "quickchars-${VERSION}.vsix" \
+            --title "QuickChars v${VERSION}" \
+            --notes-file notes.md \
+            --verify-tag
+        fi
+
+    - name: Publish to Visual Studio Marketplace
+      env:
+        VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        VERSION: ${{ steps.get_version.outputs.VERSION }}
+      run: |
+        if [ -z "$VSCE_PAT" ]; then
+          echo "::warning::VSCE_PAT secret is not set, skipping Visual Studio Marketplace"
+          exit 0
+        fi
+        npx --yes @vscode/vsce publish --packagePath "quickchars-${VERSION}.vsix" --skip-duplicate
+
+    - name: Publish to Open VSX
+      env:
+        OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        VERSION: ${{ steps.get_version.outputs.VERSION }}
+      run: |
+        if [ -z "$OVSX_PAT" ]; then
+          echo "::warning::OVSX_PAT secret is not set, skipping Open VSX"
+          exit 0
+        fi
+        npx --yes ovsx publish --packagePath "quickchars-${VERSION}.vsix" --pat "$OVSX_PAT" --skip-duplicate
