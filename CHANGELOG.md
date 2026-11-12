@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.1] - 2026-11-11
+
+### Changed
+- New extension icon and Activity Bar icon (the previous icon included a third-party logo)
+
 ## [1.1.0] - 2026-11-11
 
 ### Added
