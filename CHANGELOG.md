@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.4] - 2026-11-11
+
+### Changed
+- Updated development dependencies (TypeScript 5.9, ESLint 9.39, typescript-eslint 8.72, @vscode/test-cli 0.0.15) and applied security fixes to the lockfile
+- Modernized the release workflow: Node.js 22, lint step, tag/version check, release notes taken from the changelog, and `gh release create` instead of the deprecated release actions
+
 ## [1.0.3] - 2025-07-31
 
 ### Fixed

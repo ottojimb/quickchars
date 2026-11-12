@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -16,55 +19,62 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '22'
         cache: 'npm'
 
     - name: Install dependencies
       run: npm ci
 
-    - name: Compile extension
-      run: npm run compile
-
-    - name: Package extension
-      run: npx vsce package
+    - name: Lint
+      run: npm run lint
 
     - name: Get version from tag
       id: get_version
-      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-    - name: Create Release
-      uses: actions/create-release@v1
-      id: create_release
+    - name: Verify tag matches package.json version
+      run: |
+        PKG_VERSION=$(node -p "require('./package.json').version")
+        if [ "$PKG_VERSION" != "${{ steps.get_version.outputs.VERSION }}" ]; then
+          echo "Tag v${{ steps.get_version.outputs.VERSION }} does not match package.json version $PKG_VERSION"
+          exit 1
+        fi
+
+    - name: Package extension
+      run: npx --yes @vscode/vsce package
+
+    - name: Build release notes
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: QuickChars v${{ steps.get_version.outputs.VERSION }}
-        body: |
-          ## What's Changed
+        VERSION: ${{ steps.get_version.outputs.VERSION }}
+      run: |
+        # Extract the section for this version from CHANGELOG.md
+        awk -v v="$VERSION" '
+          $0 ~ "^## \\[" v "\\]" { found=1; next }
+          found && /^## \[/ { exit }
+          found { print }
+        ' CHANGELOG.md > notes.md
+        cat >> notes.md <<EOF
 
-          See [CHANGELOG.md](https://github.com/ottojimb/quickchars/blob/main/CHANGELOG.md) for detailed changes.
+        ## Installation
 
-          ## Installation
+        1. Download the \`quickchars-${VERSION}.vsix\` file
+        2. In VS Code/Cursor, go to Extensions view (Ctrl+Shift+X)
+        3. Click the "..." menu and select "Install from VSIX..."
+        4. Select the downloaded file
 
-          1. Download the `quickchars-${{ steps.get_version.outputs.VERSION }}.vsix` file
-          2. In VS Code/Cursor, go to Extensions view (Ctrl+Shift+X)
-          3. Click the "..." menu and select "Install from VSIX..."
-          4. Select the downloaded file
+        ## Compatibility
 
-          ## Compatibility
+        - VS Code: ^1.95.0
+        - Cursor IDE: Compatible
+        EOF
 
-          - VS Code: ^1.95.0
-          - Cursor IDE: Compatible
-        draft: false
-        prerelease: false
-
-    - name: Upload VSIX Asset
-      uses: actions/upload-release-asset@v1
+    - name: Create GitHub release
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./quickchars-${{ steps.get_version.outputs.VERSION }}.vsix
-        asset_name: quickchars-${{ steps.get_version.outputs.VERSION }}.vsix
-        asset_content_type: application/zip
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERSION: ${{ steps.get_version.outputs.VERSION }}
+      run: |
+        gh release create "$GITHUB_REF_NAME" \
+          "quickchars-${VERSION}.vsix" \
+          --title "QuickChars v${VERSION}" \
+          --notes-file notes.md \
+          --verify-tag
