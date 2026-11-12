@@ -66,7 +66,10 @@ class QuickCharsViewProvider implements vscode.WebviewViewProvider {
 
   resolveWebviewView(view: vscode.WebviewView) {
     this._view = view;
-    view.webview.options = { enableScripts: true };
+    view.webview.options = {
+      enableScripts: true,
+      localResourceRoots: [this.getElementsDir()]
+    };
 
     this.updateWebview();
 
@@ -196,7 +199,14 @@ class QuickCharsViewProvider implements vscode.WebviewViewProvider {
   private getRecentlyUsed(): Array<{ text: string, label: string, count: number, lastUsed: number }> {
     const key = 'quickChars.recentlyUsed';
     return this.context.globalState.get<Array<{ text: string, label: string, count: number, lastUsed: number }>>(key) || [];
-  } getHtml(webview: vscode.Webview, groups: Array<{ name: string, items: Array<{ label: string, text: string, isSnippet?: boolean }> }>) {
+  }
+
+  private getElementsDir(): vscode.Uri {
+    return vscode.Uri.joinPath(this.context.extensionUri, 'node_modules', '@vscode-elements', 'elements', 'dist');
+  }
+
+  getHtml(webview: vscode.Webview, groups: Array<{ name: string, items: Array<{ label: string, text: string, isSnippet?: boolean }> }>) {
+    const elementsScriptUri = webview.asWebviewUri(vscode.Uri.joinPath(this.getElementsDir(), 'bundled.js'));
     const hasContent = groups.length > 0 && groups.some(group => group.items.length > 0);
 
     if (!hasContent) {
@@ -207,7 +217,7 @@ class QuickCharsViewProvider implements vscode.WebviewViewProvider {
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <script type="module" src="https://unpkg.com/@vscode-elements/elements/dist/bundled.js"></script>
+          <script type="module" src="${elementsScriptUri}"></script>
           <style>${styles}</style>
         </head>
         <body>
@@ -313,7 +323,7 @@ class QuickCharsViewProvider implements vscode.WebviewViewProvider {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script type="module" src="https://unpkg.com/@vscode-elements/elements/dist/bundled.js"></script>
+      <script type="module" src="${elementsScriptUri}"></script>
       <style>${styles}</style>
     </head>
     <body>

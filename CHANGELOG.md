@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5] - 2026-11-11
+
+### Changed
+- The webview now loads `@vscode-elements` from the extension package instead of an unpinned CDN URL, so it works offline and cannot break on upstream major releases
+- Reduced the VSIX package from 2.7 MB to under 70 KB by excluding unused `node_modules`, screenshots, tests and CI files
+- Release workflow uses `actions/checkout@v5` and `actions/setup-node@v5`
+
 ## [1.0.4] - 2026-11-11
 
 ### Changed

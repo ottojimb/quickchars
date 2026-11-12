@@ -23,3 +23,9 @@ node_modules/**/*.d.ts
 node_modules/**/package.json
 .github/workflows/**
 .DS_Store
+out/test/**
+assets/**
+.github/**
+# Only the bundled web components are loaded by the webview
+node_modules/**
+!node_modules/@vscode-elements/elements/dist/bundled.js
